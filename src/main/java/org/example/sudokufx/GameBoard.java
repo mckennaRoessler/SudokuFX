@@ -7,37 +7,64 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import java.util.Scanner;
 
 import java.io.IOException;
 
 public class GameBoard extends Application
 {
-    private static final int BOARD_SIZE = 9;
-    private static final int TILE_SIZE = 20;
+    private static final int BOARD_SIZE = 81;
+    private static final int TILE_SIZE = 9;
+
     @Override
     public void start(Stage stage) throws IOException
     {
-        GridPane board = new GridPane();
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Select difficulty: ");
+        System.out.println("1 = easy, 2 = medium, 3 = hard");
+        int difficulty = userInput.nextInt();
 
-    for (int row = 0; row < BOARD_SIZE; row++)
-    {
-        for (int col = 0; col < BOARD_SIZE; col++)
+        if (difficulty < 1 || difficulty > 3)
         {
-            Rectangle tile = new Rectangle(TILE_SIZE, TILE_SIZE);
-            //Fill with invisible number values that can be 1-9, takes user input and determines if correct.
-            // Not necessarily one right answer so nums are not predetermined
-            //Placeholder (alternating colors):
-            if ((row + col) % 2 == 0)
-            {
-                tile.setFill(Color.YELLOW);
-            }
-            else
-            {
-                tile.setFill(Color.BLACK);
-            }
-            board.add(tile, col, row);
+            throw new IOException("Difficulty level invalid.");
         }
+
+        calculateBoardNumbers(difficulty);
     }
+
+    private void calculateBoardNumbers(int difficulty)
+    {
+        int[][] nums = new int[9][9];
+        int givenNums;
+        if (difficulty == 1) {givenNums = 40;}
+        if (difficulty == 2) {givenNums = 30;}
+        if (difficulty == 3) {givenNums = 20;}
+
+        generateBoard(nums);
+    }
+
+    public void generateBoard(int[][] nums)
+    {
+        GridPane board = new GridPane();
+        for (int row = 0; row < BOARD_SIZE; row++)
+        {
+            for (int col = 0; col < BOARD_SIZE; col++)
+            {
+                Cell cell = new Cell()
+                //Fill with invisible number values that can be 1-9, takes user input and determines if correct.
+                // Not necessarily one right answer so nums are not predetermined
+                //Placeholder (alternating colors):
+                if ((row + col) % 2 == 0)
+                {
+                    Cell.setFill(Color.YELLOW);
+                }
+                else
+                {
+                    Cell.setFill(Color.BLACK);
+                }
+                board.add(tile, col, row);
+            }
+        }
 
         Scene scene = new Scene(board, BOARD_SIZE * TILE_SIZE, BOARD_SIZE * TILE_SIZE);
         stage.setTitle("Sudoku");
