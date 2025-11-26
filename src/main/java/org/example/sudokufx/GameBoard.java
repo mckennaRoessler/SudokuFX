@@ -4,8 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import java.util.Scanner;
 
@@ -50,19 +48,10 @@ public class GameBoard extends Application
         {
             for (int col = 0; col < BOARD_SIZE; col++)
             {
-                Cell cell = new Cell()
+                Cell cell = new Cell(nums[row][col], nums[row][col], false);
                 //Fill with invisible number values that can be 1-9, takes user input and determines if correct.
-                // Not necessarily one right answer so nums are not predetermined
-                //Placeholder (alternating colors):
-                if ((row + col) % 2 == 0)
-                {
-                    Cell.setFill(Color.YELLOW);
-                }
-                else
-                {
-                    Cell.setFill(Color.BLACK);
-                }
-                board.add(tile, col, row);
+
+                board.add(cell, col, row);
             }
         }
 

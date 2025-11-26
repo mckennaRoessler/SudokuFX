@@ -1,15 +1,20 @@
 package org.example.sudokufx;
-public class Cell
+
+import javafx.scene.Node;
+
+public class Cell extends Node
 {
     private int value; //number in the cell
-    private boolean isFixed; //true if cell is filled by default
+    private final boolean isFixed; //true if cell is filled by default
+    private final int boardPosition;
 
-    public Cell(int initialValue, boolean fixed) //cell constructor
+    public Cell(int position, int initialValue, boolean fixed) //cell constructor
     {
         if (initialValue < 0 || initialValue > 9)
         {
             throw new IllegalArgumentException("Cell value must be between 0 and 9");
         }
+        this.boardPosition = position;
         this.value = initialValue;
         this.isFixed = fixed;
     }
@@ -41,5 +46,16 @@ public class Cell
     public boolean isFixed()
     {
         return isFixed;
+    }
+
+    public int getBoardPosition()
+    {
+        return boardPosition;
+    }
+
+    @Override
+    public Node getStyleableNode()
+    {
+        return super.getStyleableNode();
     }
 }
